@@ -6,13 +6,15 @@
 #include <signal.h>
 
 int main(void) {
-    void sig_handler(int sig);
-    char s[200];
+   
+     void sigint_handler(int sig);
+     char s[200];
 
-    if(signal(SIGINT, sig_handler) == SIG_ERR || signal(SIGQUIT, sig_handler) == SIG_ERR || signal(SIGTSTP, sig_handler) == SIG_ERR) {
-        perror("signal");
-        exit(1);
-    }
+     if (signal(SIGINT, sigint_handler) == SIG_ERR){
+          perror("signal");
+          exit(1);
+        }
+
 
     int number;
     int pipefd[2];
@@ -70,13 +72,8 @@ int main(void) {
     return EXIT_SUCCESS;
 }
 
-void sig_handler(int sig) {
-    printf("%d", sig);
-    if(sig == 2)
-        printf("\nThis is a special signal handler for SIGINT\n");
-    else if(sig == 3)
-        printf("\nThis is a special signal handler for SIQUIT\n");
-    else
-        printf("\nThis is a special signal handler for SIGTSTP\n");
+void sigint_handler(int sig)
+{
+  printf("\nThis is a special signal handler for SIGINT! \n");
 }
 
